@@ -4,15 +4,9 @@ let firstPuzzle = null;
 let secondPuzzle = null;
 
 function createPuzzleField(row, col, url) {
-    const container = document.createElement('div');
-    container.classList.add('puzzle-container');
-    container.style.display = 'grid';
-    container.style.width = '80%';
-    container.style.height = '80vh';
+    const container = refs.container;
     container.style.gridTemplateColumns = `repeat(${col}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${row}, 1fr)`;
-    container.style.margin = '0 auto';
-    document.body.appendChild(container);
     const containerWidth = container.offsetWidth;
     const containerHeigth = container.offsetHeight;
     const childArr = [];
@@ -28,6 +22,7 @@ function createPuzzleField(row, col, url) {
             div.style.backgroundPositionY = `${(containerHeigth / row) * j}px`;
             const number = document.createElement('span');
             number.style.color = 'blue';
+            number.style.backgroundColor = 'white'
             number.textContent = `${count}`;
             div.appendChild(number);
             childArr.push(div);
@@ -38,13 +33,15 @@ function createPuzzleField(row, col, url) {
     // container.append(...childArr);
 }
 function onFirstPuzzleClick(event) {
-    firstPuzzle = event.target;
-    firstPuzzle.classList.add('selected-item');
-    refs.container.removeEventListener('click', onFirstPuzzleClick);
-    refs.container.addEventListener('click', onSecondPuzzleClick);
+    if (event.target.class !== 'puzzle-container') {
+        firstPuzzle = event.target;
+        firstPuzzle.classList.add('selected-item');
+        refs.container.removeEventListener('click', onFirstPuzzleClick);
+        refs.container.addEventListener('click', onSecondPuzzleClick);
+    }
 }
 function onSecondPuzzleClick(event) {
-    if (event.target !== firstPuzzle) {
+    if (event.target !== firstPuzzle && event.target !== 'puzzle-container') {
         secondPuzzle = event.target;
         secondPuzzle.classList.add('selected-item');
         swapPuzzles();
@@ -97,15 +94,40 @@ function removeSelected() {
     firstPuzzle = null;
     secondPuzzle = null;
 }
-
-createPuzzleField(
-    3,
-    4,
-    'https://avatars.mds.yandex.net/get-pdb/1025945/ff5df732-8bcc-481c-9acf-5f887996a86a/s1200?webp=false',
-);
+function buttonHandler(event) {
+    if (event.target.nodeName === 'BUTTON') {
+        refs.container.innerHTML = '';
+        console.log(event.target.id);
+        switch (event.target.id) {
+            case 'cake-btn':
+                createPuzzleField(
+                    3,
+                    4,
+                    'https://avatars.mds.yandex.net/get-pdb/1025945/ff5df732-8bcc-481c-9acf-5f887996a86a/s1200?webp=false',
+                );
+                break;
+            case 'bus-btn':
+                createPuzzleField(
+                    3,
+                    4,
+                    'https://os1.i.ua/3/1/13366463_43f431c8.jpg',
+                );
+                break;
+            case 'store-btn':
+                createPuzzleField(
+                    3,
+                    4,
+                    'https://gorod-novoross.ru/foto_dop/thumbs/-dlkugqfyv986mje0io4rzpct.jpg',
+                );
+                break;
+        }
+    }
+}
 
 const refs = {
     container: document.querySelector('.puzzle-container'),
+    containerBtn: document.querySelector('.buttons-container'),
 };
 
 refs.container.addEventListener('click', onFirstPuzzleClick);
+refs.containerBtn.addEventListener('click', buttonHandler);

@@ -13,6 +13,12 @@ body {
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
+.puzzle-container{
+  display: grid;
+  width: 80%;
+  height: 80vh;
+  margin: 0 auto;
+}
 
 .puzzle-item{
   cursor: pointer;
@@ -21,4 +27,10 @@ body {
 
 .selected-item{
   border: 3px solid green;
+}
+
+.buttons-container{
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
