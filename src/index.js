@@ -8,21 +8,23 @@ function createPuzzleField(row, col, url) {
     container.style.gridTemplateColumns = `repeat(${col}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${row}, 1fr)`;
     const containerWidth = container.offsetWidth;
-    const containerHeigth = container.offsetHeight;
+    const containerHeight = container.offsetHeight;
     const childArr = [];
     let count = 0;
-    for (let i = 0; i < col; i++) {
-        for (let j = 0; j < row; j++) {
+
+    for (let j = 0; j < row; j++) {
+        for (let i = 0; i < col; i++) {
+            // console.log(containerWidth*i, containerHeight*j);
             count++;
             const div = document.createElement('div');
             div.classList.add('puzzle-item');
             div.style.backgroundImage = `url(${url})`;
-            div.style.backgroundSize = `${containerWidth}px ${containerHeigth}px`;
-            div.style.backgroundPositionX = `${(containerWidth / col) * i}px`;
-            div.style.backgroundPositionY = `${(containerHeigth / row) * j}px`;
+            div.style.backgroundSize = `${containerWidth}px ${containerHeight}px`;
+            div.style.backgroundPositionX = `-${(containerWidth / col) * i}px`;
+            div.style.backgroundPositionY = `-${(containerHeight / row) * j}px`;
             const number = document.createElement('span');
             number.style.color = 'blue';
-            number.style.backgroundColor = 'white'
+            number.style.backgroundColor = 'white';
             number.textContent = `${count}`;
             div.appendChild(number);
             childArr.push(div);
@@ -30,7 +32,7 @@ function createPuzzleField(row, col, url) {
     }
     const sortedArrChild = childArr.sort(() => Math.random() - 0.5);
     container.append(...sortedArrChild);
-    // container.append(...childArr);
+    // container.append(...childArr)
 }
 function onFirstPuzzleClick(event) {
     if (event.target.class !== 'puzzle-container') {
@@ -97,27 +99,18 @@ function removeSelected() {
 function buttonHandler(event) {
     if (event.target.nodeName === 'BUTTON') {
         refs.container.innerHTML = '';
-        console.log(event.target.id);
         switch (event.target.id) {
             case 'cake-btn':
-                createPuzzleField(
-                    3,
-                    4,
-                    'https://avatars.mds.yandex.net/get-pdb/1025945/ff5df732-8bcc-481c-9acf-5f887996a86a/s1200?webp=false',
-                );
+                createPuzzleField(3, 4, './images/cake.jpg');
                 break;
             case 'bus-btn':
-                createPuzzleField(
-                    3,
-                    4,
-                    'https://os1.i.ua/3/1/13366463_43f431c8.jpg',
-                );
+                createPuzzleField(3, 4, './images/bus.jpg');
                 break;
             case 'store-btn':
                 createPuzzleField(
                     3,
                     4,
-                    'https://gorod-novoross.ru/foto_dop/thumbs/-dlkugqfyv986mje0io4rzpct.jpg',
+                    './images/-dlkugqfyv986mje0io4rzpct.jpg',
                 );
                 break;
         }
