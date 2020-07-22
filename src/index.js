@@ -1,4 +1,7 @@
 import './styles.css';
+import bus from './images/bus.jpg';
+import cake from './images/cake.jpg';
+import store from './images/-dlkugqfyv986mje0io4rzpct.jpg';
 
 let firstPuzzle = null;
 let secondPuzzle = null;
@@ -14,7 +17,6 @@ function createPuzzleField(row, col, url) {
 
     for (let j = 0; j < row; j++) {
         for (let i = 0; i < col; i++) {
-            // console.log(containerWidth*i, containerHeight*j);
             count++;
             const div = document.createElement('div');
             div.classList.add('puzzle-item');
@@ -32,7 +34,6 @@ function createPuzzleField(row, col, url) {
     }
     const sortedArrChild = childArr.sort(() => Math.random() - 0.5);
     container.append(...sortedArrChild);
-    // container.append(...childArr)
 }
 function onFirstPuzzleClick(event) {
     if (event.target.class !== 'puzzle-container') {
@@ -101,17 +102,13 @@ function buttonHandler(event) {
         refs.container.innerHTML = '';
         switch (event.target.id) {
             case 'cake-btn':
-                createPuzzleField(3, 4, './images/cake.jpg');
+                createPuzzleField(3, 4, cake);
                 break;
             case 'bus-btn':
-                createPuzzleField(3, 4, './images/bus.jpg');
+                createPuzzleField(3, 4, bus);
                 break;
             case 'store-btn':
-                createPuzzleField(
-                    3,
-                    4,
-                    './images/-dlkugqfyv986mje0io4rzpct.jpg',
-                );
+                createPuzzleField(3, 4, store);
                 break;
         }
     }
